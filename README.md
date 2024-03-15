@@ -1,4 +1,4 @@
-# Dungeon rng (*nimi pole lõplik*)
+S# Dungeon rng (*nimi pole lõplik*)
 
 Projekt on mäng. Tuleb Classic Doom stiilis.
 
@@ -9,7 +9,7 @@ See hakkab kasutama Pseudo 3d, Vastased ja ruumid hakkavad olema rng. Level muut
 
 proovida asjad tööle saada.
 
-## Sihtr[hm
+## Sihtrühm
 Enda sugused inimesed on rohkem minu sihtrühm
 
 ## Tegevused
