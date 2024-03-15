@@ -1,4 +1,4 @@
-S# Dungeon rng (*nimi pole lõplik*)
+# Dungeon rng (*nimi pole lõplik*)
 
 Projekt on mäng. Tuleb Classic Doom stiilis.
 
