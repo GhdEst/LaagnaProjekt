@@ -17,3 +17,5 @@ Enda sugused inimesed on rohkem minu sihtrühm
 
 ## tööriistad
 Pygame
+
+![peeter](https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png)
