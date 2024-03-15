@@ -19,3 +19,6 @@ Enda sugused inimesed on rohkem minu sihtrühm
 Pygame
 
 ![peeter](https://upload.wikimedia.org/wikipedia/en/c/c2/Peter_Griffin.png)
+
+
+![peeter](https://media.moddb.com/images/downloads/1/144/143846/Screenshot_Doom_20180918_164534.png)
