@@ -33,9 +33,9 @@ class Player:
         self.x += dx
         self.y += dy
 
-        if keys(pg.K_LEFT):
+        if keys[pg.K_LEFT]:
             self.angle -= PLAYER_ROT_SPEED * self.game.delta_time
-        if keys(pg.K_RIGHT):
+        if keys[pg.K_RIGHT]:
             self.angle += PLAYER_ROT_SPEED * self.game.delta_time
         self.angle %= math.tau
 
