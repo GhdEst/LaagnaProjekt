@@ -1,6 +1,7 @@
 from settings import *
 import pygame as pg
 import math
+from map import *
 
 class Player:
     def __init__(self, game) -> None:
@@ -23,10 +24,10 @@ class Player:
         if keys[pg.K_s]:
             dx -= speed_cos
             dy -= speed_sin
-        if keys[pg.K_a]:
+        if keys[pg.K_d]:
             dx -= speed_sin
             dy += speed_cos  
-        if keys[pg.K_d]:
+        if keys[pg.K_a]:
             dx += speed_sin  
             dy -= speed_cos  
 
@@ -38,6 +39,15 @@ class Player:
         if keys[pg.K_RIGHT]:
             self.angle += PLAYER_ROT_SPEED * self.game.delta_time
         self.angle %= math.tau
+
+        next_x = self.x + dx
+        next_y = self.y + dy
+
+        if (self.game.map.World_map.get((int(next_x), int(next_y))) != 1 and 0 <= next_x < len(self.game.map.mini_map[0]) and 0 <= next_y < len(self.game.map.mini_map)):
+
+
+            self.x = next_x
+            self.y = next_y
 
 
     def draw(self):

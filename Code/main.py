@@ -15,6 +15,7 @@ class Game:
         self.delta_time = 1
         self.new_game()
         self.renderer = Renderer(self)
+        self.map = Map(self)
 
     def new_game(self):
         self.map = Map(self)
@@ -44,6 +45,8 @@ class Game:
                  self.update()
                  self.draw()
                  self.renderer.render()
+                 self.map.draw()
+                 pg.display.flip()
 
 if __name__ == '__main__':
      game = Game()
