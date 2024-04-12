@@ -1,7 +1,7 @@
 from settings import *
 import pygame as pg
 import math
-from map import *
+import map
 
 class Player:
     def __init__(self, game) -> None:
@@ -30,9 +30,6 @@ class Player:
         if keys[pg.K_a]:
             dx += speed_sin  
             dy -= speed_cos  
-
-        self.x += dx
-        self.y += dy
 
         if keys[pg.K_LEFT]:
             self.angle -= PLAYER_ROT_SPEED * self.game.delta_time

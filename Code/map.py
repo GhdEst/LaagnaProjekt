@@ -55,8 +55,8 @@ class Map:
             wall_height = RES[1] / (dist_to_wall if dist_to_wall > 0 else 0.00001)
 
         # Calculate the color of the wall slice based on the distance
-            color = 135 / (1 + dist_to_wall * dist_to_wall * 0.00002)
-            color = (color, color, color)
+            color_intensity = max(min(135 / (dist_to_wall if dist_to_wall > 0 else 0.00001), 135), 0)
+            color = (color_intensity, color_intensity, color_intensity)
 
         # Draw the wall slice
             pg.draw.rect(self.game.screen, color, (ray * RES[0] / RAYS, RES[1] / 2 - wall_height / 2, RES[0] / RAYS, wall_height))
