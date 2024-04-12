@@ -3,6 +3,8 @@ import sys
 from settings  import *
 from map import *
 from player import *
+from map import *
+from render import *
 
 
 class Game:
@@ -12,6 +14,7 @@ class Game:
         self.clock = pg.time.Clock()
         self.delta_time = 1
         self.new_game()
+        self.renderer = Renderer(self)
 
     def new_game(self):
         self.map = Map(self)
@@ -40,6 +43,7 @@ class Game:
                  self.check_events()
                  self.update()
                  self.draw()
+                 self.renderer.render()
 
 if __name__ == '__main__':
      game = Game()
