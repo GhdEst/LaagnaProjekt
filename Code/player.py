@@ -21,15 +21,15 @@ class Player:
             dx += speed_cos
             dy += speed_sin
         if keys[pg.K_s]:
-            dx += -speed_cos
-            dy += -speed_sin
+            dx -= speed_cos
+            dy -= speed_sin
         if keys[pg.K_a]:
-            dx += speed_cos
-            dy += -speed_sin
+            dx -= speed_sin  # Change here
+            dy += speed_cos  # Change here
         if keys[pg.K_d]:
-            dx += -speed_cos
-            dy += speed_sin
-        
+            dx += speed_sin  # Change here
+            dy -= speed_cos  # Change here
+
         self.x += dx
         self.y += dy
 
@@ -38,6 +38,7 @@ class Player:
         if keys[pg.K_RIGHT]:
             self.angle += PLAYER_ROT_SPEED * self.game.delta_time
         self.angle %= math.tau
+
 
     def draw(self):
         pg.draw.line(self.game.screen, 'yellow', (self.x * 100, self.y * 100),
