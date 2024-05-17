@@ -8,6 +8,7 @@ class Player:
         self.game = game
         self.x, self.y = PLAYER_POS
         self.angle = PLAYER_ANGLE
+        self.health = 1000000
 
     def movement(self):
         sin_a = math.sin(self.angle)
