@@ -12,6 +12,10 @@ class Renderer:
         # Draw the map
         self.game.map.draw()
 
+        # Draw enemies
+        for enemy in self.game.map.enemies:
+            enemy.draw()
+
         # Draw the player
         self.game.player.draw()
 
