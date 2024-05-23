@@ -6,21 +6,26 @@ from map import *
 FOV = (math.pi / 4)
 
 class Enemy:
-    def __init__(self, game, pos, speed, attack_distance, damage):
+    def __init__(self, game, pos, speed, attack_distance, damage, attack_cooldown):
         self.game = game
         self.pos = pg.Vector2(pos)  # Ensure pos is a pg.Vector2
         self.speed = speed
+        
         self.attack_distance = attack_distance
         self.damage = damage
         self.attack_cooldown = attack_cooldown
         self.last_attack_time = 0
+        self.move_cooldown = 0
         self.alive = True
         self.health = 100
 
     def update(self):
         if self.alive:
-            self.move_towards_player()
-            self.check_attack()
+            if self.move_cooldown > 0:
+                self.move_cooldown -= self.game.delta_time
+            else:            
+                self.move_towards_player()
+                self.check_attack()
 
     def move_towards_player(self):
         player_pos = pg.Vector2(self.game.player.pos)  # Ensure player_pos is a pg.Vector2
@@ -47,7 +52,10 @@ class Enemy:
 
         player_pos = pg.Vector2(self.game.player.pos)
         direction = (self.pos - player_pos).normalize()
-        self.pos += direction * self.attack_distance / 2
+        new_pos = self.pos + direction * self.attack_distance / 2
+        if not self.check_collision(new_pos):
+            self.pos = new_pos
+        self.move_cooldown = 1000
 
     def draw(self):
         if self.alive:
@@ -75,8 +83,8 @@ class Enemy:
             top = int(RES[1] / 2 - projected_height / 2)
             bottom = int(RES[1] / 2 + projected_height / 2)
 
-            enemy_size = 200
-            screen_pos = (screen_x, bottom - enemy_size)
+            enemy_size = max(600 / distance, 10) 
+            screen_pos = (screen_x, bottom - enemy_size )
             pg.draw.rect(self.game.screen, (255, 0, 0), (screen_pos, (enemy_size / 2, enemy_size)))
 
     def is_visible(self, player, distance):
