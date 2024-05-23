@@ -25,7 +25,6 @@ import pygame as pg
 from settings import *
 from enemy import Enemy
 
-# Constants
 FOV = (math.pi / 4)
 RAYS = 100
 EPSILON = 1e-6
@@ -35,7 +34,7 @@ class Map:
         self.game = game
         self.mini_map = mini_map
         self.World_map = {}
-        self.enemies = []
+        self.enemies = [Enemy(game, (5, 5), speed=0.0005, attack_distance=1.5, damage=10, attack_cooldown=1000)]
         self.get_map()
         self.spawn_enemies()
 
@@ -102,16 +101,15 @@ class Map:
             x1, y1_top, y1_bottom, color1 = wall_slices[i]
             x2, y2_top, y2_bottom, color2 = wall_slices[i + 1]
             top_polygon = [(x1, y1_top), (x2, y2_top), (x2, y1_top), (x1, y1_top)]
-            bottom_polygon = [(x1, y1_bottom), (x2, y1_bottom), (x2, y2_bottom), (x1, y2_bottom)]
+            bottom_polygon = [(x1, y1_bottom), (x2, y1_bottom), (x2, y2_bottom), (x1, y1_bottom)]
             pg.draw.polygon(self.game.screen, color1, top_polygon)
             pg.draw.polygon(self.game.screen, color1, bottom_polygon)
 
     def spawn_enemies(self):
-        # Ensure enemy spawns in non-wall locations
         possible_positions = [(x, y) for y in range(len(self.mini_map)) for x in range(len(self.mini_map[y])) if self.mini_map[y][x] == False]
         if possible_positions:
             spawn_pos = random.choice(possible_positions)
-            self.enemies.append(Enemy(self.game, spawn_pos, 0.02, 1.5, 10))
+            self.enemies.append(Enemy(self.game, pg.Vector2(spawn_pos), 0.02, 1.5, 10))  # Ensure spawn_pos is a pg.Vector2
 
     def update(self):
         for enemy in self.enemies:
