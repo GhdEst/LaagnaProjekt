@@ -12,6 +12,10 @@ proovida asjad tööle saada.
 ## Sihtrühm
 Enda sugused inimesed on rohkem minu sihtrühm
 
+## Kontrollid
+W,A,S,D - liikumine
+vasak, parem nool- kaamera
+tyhik - laskmine
 ## Tegevused
 
 
