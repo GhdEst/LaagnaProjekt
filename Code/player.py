@@ -9,7 +9,7 @@ class Player:
         self.x, self.y = PLAYER_POS
         self.angle = PLAYER_ANGLE
         self.health = 1000000
-        self.shoot_cooldown = 500  # Cooldown time between shots in milliseconds
+        self.shoot_cooldown = 1300  # Cooldown time between shots in milliseconds
         self.last_shot_time = 0
 
 
@@ -69,7 +69,7 @@ class Player:
 
                 for enemy in self.game.map.enemies:
                     if enemy.alive and enemy.pos.distance_to((ray_x, ray_y)) < 10:
-                        enemy.take_damage(50)
+                        enemy.take_damage(40)
                         return
 
 

@@ -34,7 +34,7 @@ class Map:
         self.game = game
         self.mini_map = mini_map
         self.World_map = {}
-        self.enemies = [Enemy(game, (5, 5), speed=0.0005, attack_distance=1.05, damage=10, attack_cooldown=1000)]
+        self.enemies = [Enemy(game, (5, 5), speed=0.003, attack_distance=1.05, damage=10, attack_cooldown=1000)]
         self.get_map()
         self.spawn_enemies()
 
@@ -107,9 +107,11 @@ class Map:
 
     def spawn_enemies(self):
         possible_positions = [(x, y) for y in range(len(self.mini_map)) for x in range(len(self.mini_map[y])) if self.mini_map[y][x] == False]
-        if possible_positions:
-            spawn_pos = random.choice(possible_positions)
-            self.enemies.append(Enemy(self.game, pg.Vector2(spawn_pos), 0.005, 1.05, 10, 1000))  # Ensure spawn_pos is a pg.Vector2
+        num_enemies = 7  # Number of enemies to spawn
+        for _ in range(num_enemies):
+            if possible_positions:
+                spawn_pos = random.choice(possible_positions)
+                self.enemies.append(Enemy(self.game, pg.Vector2(spawn_pos), 0.003, 1.05, 10, 1000))  # Ensure spawn_pos is a pg.Vector2
 
     def update(self):
         for enemy in self.enemies:
