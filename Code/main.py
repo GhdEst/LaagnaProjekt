@@ -11,11 +11,12 @@ class Game:
         pg.init()
         self.screen = pg.display.set_mode(RES)
         self.clock = pg.time.Clock()
+        self.font = pg.font.Font(None, 24)
         self.delta_time = 1
         self.new_game()
         self.renderer = Renderer(self)
         self.map = Map(self)
-        self.tile_size = 32
+        self.bullets = []
 
     def new_game(self):
         self.map = Map(self)
@@ -27,6 +28,8 @@ class Game:
         pg.display.flip()
         self.delta_time = self.clock.tick(FPS)
         pg.display.set_caption(f'{self.clock.get_fps() :.1f}')
+        for bullet in self.bullets:
+            bullet.update()
 
     def draw(self):
         self.screen.fill('White')

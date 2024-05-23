@@ -2,20 +2,20 @@ F = False
 mini_map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],    
     [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
-    [1, F, F, 1, 1, 1, 1, F, F, F, 1, 1, 1, F, F, F, F, F, F, F, F, 1],
-    [1, F, F, F, F, F, 1, F, F, F, F, F, 1, F, F, F, F, F, F, F, F, 1],
-    [1, F, F, F, F, F, 1, F, F, F, F, F, 1, F, F, F, F, F, F, F, F, 1],
-    [1, F, F, 1, 1, 1, 1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
     [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
-    [1, F, F, F, 1, F, F, F, 1, F, F, F, F, F, F, F, F, F, F, F, F, 1],
-    [1, F, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, F, F, F, F, F, F, F, F, 1],
     [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
-    [1, F, F, 1, 1, 1, 1, F, F, F, 1, 1, 1, F, F, F, F, F, F, F, F, 1],
-    [1, F, F, F, F, F, 1, F, F, F, F, F, 1, F, F, F, F, F, F, F, F, 1],
-    [1, F, F, F, F, F, 1, F, F, F, F, F, 1, F, F, F, F, F, F, F, F, 1],
-    [1, F, F, 1, 1, 1, 1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
     [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
-    [1, F, F, F, 1, F, F, F, 1, F, F, F, F, F, F, F, F, F, F, F, F, 1],
+    [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
+    [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
+    [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
+    [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
+    [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
+    [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
+    [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
+    [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
+    [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
+    [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
+    [1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ]
 
@@ -27,26 +27,26 @@ from enemy import Enemy
 
 FOV = (math.pi / 4)
 RAYS = 100
-EPSILON = 1e-6
+EPSILON = 1e-8
 
 class Map:
     def __init__(self, game) -> None:
         self.game = game
         self.mini_map = mini_map
         self.World_map = {}
-        self.enemies = [Enemy(game, (5, 5), speed=0.0005, attack_distance=1.05, damage=10, attack_cooldown=1000)]
-        self.get_map()
+        self.enemies = []
         self.spawn_enemies()
+        self.get_map()
 
     def get_map(self):
         for j, row in enumerate(self.mini_map):
             for i, value in enumerate(row):
                 if value:
-                    self.World_map[(i, j)] = value    
+                    self.World_map[(i, j)] = value
 
     def raycast(self, player):
         wall_slices = []
-        
+
         for ray in range(RAYS):
             ray_angle = player.angle - (FOV / 2) + (ray * FOV / RAYS)
             ray_angle = ray_angle % (2 * math.pi)
@@ -109,13 +109,33 @@ class Map:
         possible_positions = [(x, y) for y in range(len(self.mini_map)) for x in range(len(self.mini_map[y])) if self.mini_map[y][x] == False]
         if possible_positions:
             spawn_pos = random.choice(possible_positions)
-            self.enemies.append(Enemy(self.game, pg.Vector2(spawn_pos), 0.005, 1.05, 10, 1000))  # Ensure spawn_pos is a pg.Vector2
+            self.enemies.append(Enemy(self.game, pg.Vector2(spawn_pos), 0.02, 1.5, 10, 1000))
 
     def update(self):
         for enemy in self.enemies:
             enemy.update()
 
+        # Check if all enemies are dead, then respawn
+        if all(not enemy.alive for enemy in self.enemies):
+            self.enemies = []  # Clear the list of enemies
+            self.spawn_enemies()
+
     def draw(self):
         self.raycast(self.game.player)
         for enemy in self.enemies:
             enemy.draw()
+
+        # Draw bullets
+        for bullet in self.game.bullets:
+            bullet.draw()
+
+        # Draw kill count
+        kill_text = f"Kills: {self.game.player.kills}"
+        text_surface = self.game.font.render(kill_text, True, WHITE)
+        self.game.screen.blit(text_surface, (10, 10))
+
+    def is_collision(self, x, y):
+        map_x, map_y = int(x), int(y)
+        if self.World_map.get((map_x, map_y)) == 1:
+            return True
+        return False
