@@ -1,12 +1,10 @@
+import random
 import pygame as pg
 import sys
-from settings  import *
+from settings import *
 from map import *
 from player import *
-from map import *
 from render import *
-
-
 
 class Game:
     def __init__(self):
@@ -23,9 +21,9 @@ class Game:
         self.map = Map(self)
         self.player = Player(self)
 
-
     def update(self):
         self.player.update()
+        self.map.update()  # Update the map, which updates enemies
         pg.display.flip()
         self.delta_time = self.clock.tick(FPS)
         pg.display.set_caption(f'{self.clock.get_fps() :.1f}')
