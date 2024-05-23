@@ -19,17 +19,16 @@ mini_map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ]
 
-import random
 import math
+import random
 import pygame as pg
 from settings import *
 from enemy import Enemy
 
 # Constants
-FOV = (math.pi / 4)  # Field of View
-RAYS = 100  # Number of rays to cast
+FOV = (math.pi / 4)
+RAYS = 100
 EPSILON = 1e-6
-color1 = 255
 
 class Map:
     def __init__(self, game) -> None:
