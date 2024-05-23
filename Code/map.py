@@ -19,6 +19,7 @@ mini_map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ]
 
+import random
 import math
 import pygame as pg
 from settings import *
@@ -98,7 +99,6 @@ class Map:
 
             wall_slices.append((x, RES[1] / 2 - wall_height / 2, RES[1] / 2 + wall_height / 2, color))
 
-
         for i in range(len(wall_slices) - 1):
             x1, y1_top, y1_bottom, color1 = wall_slices[i]
             x2, y2_top, y2_bottom, color2 = wall_slices[i + 1]
@@ -108,7 +108,11 @@ class Map:
             pg.draw.polygon(self.game.screen, color1, bottom_polygon)
 
     def spawn_enemies(self):
-        self.enemies.append(Enemy(self.game, (8, 8), 0.02, 1.5, 10))
+        # Ensure enemy spawns in non-wall locations
+        possible_positions = [(x, y) for y in range(len(self.mini_map)) for x in range(len(self.mini_map[y])) if self.mini_map[y][x] == False]
+        if possible_positions:
+            spawn_pos = random.choice(possible_positions)
+            self.enemies.append(Enemy(self.game, spawn_pos, 0.02, 1.5, 10))
 
     def update(self):
         for enemy in self.enemies:
@@ -118,4 +122,3 @@ class Map:
         self.raycast(self.game.player)
         for enemy in self.enemies:
             enemy.draw()
-
